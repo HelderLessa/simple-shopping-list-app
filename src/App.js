@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 export default function App() {
   const [input, setInput] = useState("");
@@ -13,7 +13,6 @@ export default function App() {
         setItems={setItems}
       />
       <List items={items} setItems={setItems} />
-      <TotalAmount items={items} />
     </div>
   );
 }
@@ -36,7 +35,7 @@ function Form({ input, setInput, setItems, items }) {
         type="text"
         placeholder="Add an item..."
       />
-      <button className="submit-btn" type="submit">
+      <button className="submit-btn btn" type="submit">
         +
       </button>
     </form>
@@ -49,19 +48,23 @@ function List({ items, setItems }) {
   }
 
   return (
-    <ul className="list">
-      {items.map((item) => (
-        <li key={item.id}>
-          {item.title}
-          <button onClick={() => handledelete(item)} className="del-btn">
-            X
-          </button>
-        </li>
-      ))}
-    </ul>
+    <Fragment>
+      <ul className="list">
+        {items.map((item) => (
+          <li key={item.id}>
+            {item.title}
+            <button onClick={() => handledelete(item)} className="del-btn btn">
+              X
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="total">
+        <button onClick={() => setItems([])} className="btn clear-btn">
+          Clear list
+        </button>
+        <div>Total items: {items.length}</div>
+      </div>
+    </Fragment>
   );
-}
-
-function TotalAmount({ items }) {
-  return <div className="total">Total items: {items.length}</div>;
 }
