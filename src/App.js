@@ -1,8 +1,13 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export default function App() {
+  const initialState = JSON.parse(localStorage.getItem("list")) || [];
   const [input, setInput] = useState("");
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialState);
+
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(items));
+  }, [items]);
 
   return (
     <div className="container">
